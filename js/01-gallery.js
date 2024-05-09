@@ -1,33 +1,46 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-console.log(galleryItems);
 
-const list = document.querySelector(".gallery");
-
-list.addEventListener('click', gallery)
+const list = document.querySelector(".gallery"); //ul для галереї
+const cardsMarkup = creatImg(galleryItems)
 
 //створення галереї
-const elem = galleryItems.map((oneElem) => {
-    const item = `<li class="gallery__item">
-    <a class="gallery__link" href="${oneElem.original}">
+function creatImg(galleryItems) {
+    return galleryItems
+        .map(({ preview, original, description }) => {
+        return `
+        <li class="gallery__item">
+    <a class="gallery__link" href="${original}">
     <img
         class="gallery__image"
-        src="${oneElem.preview}"
-        data-source="${oneElem.original}"
-        alt="${oneElem.description}"
+        src="${preview}"
+        data-source="${original}"
+        alt="${description}"
     />
     </a>
-</li>`;
-    return item
-}).join('')
-
-list.insertAdjacentHTML("afterbegin", elem);
-
-function gallery(event) {
-    event.preventDefault()
-  //перевірити чи клік відбувся по картинці (в основній ф-ції)
-  if (event.target.nodeName !== 'img') {
-      return
-  }
+</li>`
+    }).join('')
 }
+
+//відображення галереї (додавання в DOM)
+list.insertAdjacentHTML("afterbegin", cardsMarkup);
+
+//подія
+list.addEventListener('click', onImgClick)
+
+
+//модалка з картинкою
+function onImgClick(event) {
+    event.preventDefault();
+    if (!event.target.classList.contains("gallery__image")) {
+        return;
+    }
+
+    const imgSource = event.target.dataset.source
+    const instance = basicLightbox.create(
+        `<img src=${imgSource}>`);
+    
+    instance.show();
+}
+
