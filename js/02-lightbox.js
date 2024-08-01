@@ -5,6 +5,9 @@ console.log(galleryItems);
  
 const list = document.querySelector(".gallery"); //ul для галереї
 const cardsMarkup = creatImg(galleryItems);
+//відображення галереї (додавання в DOM)
+list.insertAdjacentHTML("beforeend", cardsMarkup);
+
 
 //створення галереї
 function creatImg(galleryItems) {
@@ -20,6 +23,12 @@ function creatImg(galleryItems) {
     .join("")
 }
 
-//відображення галереї (додавання в DOM)
-list.insertAdjacentHTML("afterbegin", cardsMarkup);
 
+
+const galleryLightbox = new SimpleLightbox(".gallery a", {
+  /* options */
+  captionsData: 'alt',
+  captionDelay: 250,
+  captionPosition: 'bottom',
+
+});
