@@ -1,7 +1,7 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-console.log(galleryItems);
+// console.log(galleryItems);
  
 const list = document.querySelector(".gallery"); //ul для галереї
 const cardsMarkup = creatImg(galleryItems);
